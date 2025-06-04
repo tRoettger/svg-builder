@@ -1,7 +1,16 @@
 {
   "name": "svg-builder",
   "packageManager": "yarn@4.6.0",
+  "version": "0.0.1",
+  "author": "Tobias Röttger",
+  "license": "MIT",
+  "main": "src/main/js/main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Hello World\""
+  },
   "devDependencies": {
-    "electron": "^36.4.0"
+    "electron": "^36.4.0",
+    "electron-builder": "26.0.12"
   }
 }

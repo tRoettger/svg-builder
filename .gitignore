@@ -11,3 +11,9 @@
 
 #!.yarn/cache
 .pnp.*
+doc/**/*.html
+node_modules/
+out/
+experiments/
+dist/
+README.html

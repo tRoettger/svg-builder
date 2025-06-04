@@ -6,7 +6,7 @@ const createWindow = () => {
     const window = new BrowserWindow({
         width: 800, height: 600
     });
-    window.loadFile("index.html");
+    window.loadFile("src/main/html/index.html");
 };
 
 app.whenReady().then(createWindow);

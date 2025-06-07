@@ -3,6 +3,9 @@ console.log("Hello from Electron");
 const {app, BrowserWindow } = require('electron');
 const path = require('node:path');
 const { setupIpc } = require('./service/svg-handler');
+const { menuService } = require('./service/menuService');
+require('./frontend/menu');
+const { build } = require('electron-builder');
 
 const createWindow = () => {
     const window = new BrowserWindow({
@@ -13,6 +16,7 @@ const createWindow = () => {
         }
     });
     window.loadFile("src/main/html/index.html");
+    menuService.getWebContents = () => window.webContents;
 };
 
 app.whenReady().then(() => {

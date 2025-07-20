@@ -3,6 +3,7 @@ const path = require('node:path');
 const { setupIpc } = require('./service/svg-handler');
 require('./frontend/menu');
 const { GET_MAIN_WINDOW, GET_WEBCONTENTS, createLogger } = require('./service/common/serviceCenter');
+const { setupIpcMain } = require('./service/channels');
 
 const createWindow = () => {
     const window = new BrowserWindow({
@@ -24,11 +25,11 @@ const loadService = () => {
     createLogger('MAIN').info("Logging Service loaded");
     require('./service/fileService');
     require('./service/menuService');
-    require('./service/svgParser');
-    require('./service/svgAnalyser');
+    require('./service/shapeStorage');
 };
 
 app.whenReady().then(() => {
     setupIpc();
+    setupIpcMain();
     createWindow();
 });

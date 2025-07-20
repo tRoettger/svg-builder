@@ -1,7 +1,10 @@
+const { webContents } = require('electron');
+const { MENU_OPEN_FILE, GET_WEBCONTENTS, createLogger } = require('./common/serviceCenter');
+
+const LOGGER = createLogger("MenuService");
+
 class MenuService {
     constructor() {
-        this.getWebContents = () => console.error("Window not yet loaded.");
-
         this.new = this.new.bind(this);
         this.open = this.open.bind(this);
         this.save = this.save.bind(this);
@@ -13,35 +16,36 @@ class MenuService {
     }
 
     new() {
-        console.log("Menu Action call: new");
+        LOGGER.info("Menu Action call: new");
     }
 
     open() {
-        console.log("Menu Action call: open");
+        LOGGER.info("Menu Action call: open");
+        MENU_OPEN_FILE.send();
     }
 
     save() {
-        console.log("Menu Action call: save");
+        LOGGER.info("Menu Action call: save");
     }
 
     saveAs() {
-        console.log("Menu Action call: saveAs");
+        LOGGER.info("Menu Action call: saveAs");
     }
 
     undo() {
-        console.log("Menu Action call: undo");
+        LOGGER.info("Menu Action call: undo");
     }
 
     redo() {
-        console.log("Menu Action call: redo");
+        LOGGER.info("Menu Action call: redo");
     }
 
     reload() {
-        this.getWebContents().reloadIgnoringCache();
+        GET_WEBCONTENTS.request(webContents => webContents.reloadIgnoringCache());
     }
 
     openDevTools() {
-        this.getWebContents().openDevTools({ mode: "detach" });
+        GET_WEBCONTENTS.request(webContents => webContents.openDevTools({ mode: "detach" }));
     }
 
 }

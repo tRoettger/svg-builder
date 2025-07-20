@@ -1,11 +1,9 @@
-console.log("Hello from Electron");
-
 const {app, BrowserWindow } = require('electron');
 const path = require('node:path');
 const { setupIpc } = require('./service/svg-handler');
-const { menuService } = require('./service/menuService');
 require('./frontend/menu');
-const { build } = require('electron-builder');
+const { GET_MAIN_WINDOW, GET_WEBCONTENTS, createLogger } = require('./service/common/serviceCenter');
+const { setupIpcMain } = require('./service/channels');
 
 const createWindow = () => {
     const window = new BrowserWindow({
@@ -16,10 +14,22 @@ const createWindow = () => {
         }
     });
     window.loadFile("src/main/html/index.html");
-    menuService.getWebContents = () => window.webContents;
+    
+    GET_WEBCONTENTS.register(() => window.webContents);
+    GET_MAIN_WINDOW.register(() => window);
+    loadService();
+};
+
+const loadService = () => {
+    require('./service/loggingService');
+    createLogger('MAIN').info("Logging Service loaded");
+    require('./service/fileService');
+    require('./service/menuService');
+    require('./service/shapeStorage');
 };
 
 app.whenReady().then(() => {
     setupIpc();
+    setupIpcMain();
     createWindow();
 });

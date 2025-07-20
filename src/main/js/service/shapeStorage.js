@@ -9,9 +9,12 @@ class ShapeStorage {
 
     setShapes(shapes) {
         this.shapes = shapes;
-        console.log("Shapes:", shapes);
     }
 }
 
 const shapeStorage = new ShapeStorage();
-SVG_DOCUMENT_ELEMENT.subscribe(shapes => shapeStorage.setShapes(shapes));
+SVG_DOCUMENT_ELEMENT.subscribe(element => {
+    console.log("Element:", element);
+    shapeStorage.setShapes(element.shapes);
+
+});

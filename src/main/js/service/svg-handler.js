@@ -2,6 +2,9 @@ const { ipcMain } = require('electron');
 const { SvgChannel } = require('./channels');
 
 const fs = require('fs');
+const { createLogger } = require('./common/serviceCenter');
+
+const LOGGER = createLogger("SVG-Handlers");
 
 const loadSvg = async (path) => {
     return await new Promise((resolve, reject) => fs.readFile(path, {}, (err, data) => {
@@ -9,7 +12,7 @@ const loadSvg = async (path) => {
             console.error("An error occured", err);
             reject(err);
         } else {
-            console.log("loaded svg from ", path);
+            LOGGER.debug("loaded svg from ", path);
             resolve(data.toString());
         }
     }));
@@ -17,7 +20,7 @@ const loadSvg = async (path) => {
 
 exports.setupIpc = () => {
     ipcMain.handle(SvgChannel.REQUEST_SVG, async () => {
-        console.log("loading SVG");
+        LOGGER.debug("loading SVG");
         return await loadSvg("./experiments/test.svg");
     });
 };

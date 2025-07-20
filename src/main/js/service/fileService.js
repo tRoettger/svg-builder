@@ -20,18 +20,18 @@ class FileService {
                 ]
             })
             .then(result => result.filePaths[0])
-            .then(file => this.readFileContent)
+            .then(path => this.readFileContent(path))
             .catch(error => LOGGER.error(`SB-002 Error while opening file`, error));
 
         });
     }
 
     readFileContent(path) {
-        fs.readFile(path, {}, (err, data) => {
+        fs.readFile(path, { encoding: 'utf-8'}, (error, data) => {
             if (error) {
                 LOGGER.error(`SB-001 Error while reading file ${path}`, error);
             } else {
-                LOGGER.info(`Received data successfully`);
+                LOGGER.debug(`File ${path} was successfully read`);
             }
         });
     }

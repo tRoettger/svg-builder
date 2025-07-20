@@ -14,7 +14,7 @@ class ShapeStorage {
 
 const shapeStorage = new ShapeStorage();
 SVG_DOCUMENT_ELEMENT.subscribe(element => {
-    console.log("Element:", element);
+    console.log("Analysis done:", element);
     shapeStorage.setShapes(element.shapes);
 
 });

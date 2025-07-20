@@ -25,9 +25,12 @@ const frontendToBackend = (channelId, serviceChannel) => {
     };
 };
 
+/* Invoke Channels */
 exports.REQUEST_SVG = invokeOnly("request-svg");
 
+/* Backend-to-Frontend Broadcast Channels  */
 exports.PROVIDE_SVG = broadcast("provide-svg");
 LOAD_SVG_CONTENT.subscribe(data => this.PROVIDE_SVG.send(data.toString()));
 
+/* Frontend-to-Backend Channels */
 exports.SVG_DISPLAYED = frontendToBackend("SVG_DISPLAYED", SVG_DOCUMENT_ELEMENT);

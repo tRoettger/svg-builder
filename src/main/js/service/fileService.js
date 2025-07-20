@@ -1,7 +1,7 @@
 const fs = require('fs');
 const { dialog } = require('electron');
 
-const { MENU_OPEN_FILE, GET_MAIN_WINDOW, LOAD_SVG, createLogger } = require('./common/serviceCenter');
+const { MENU_OPEN_FILE, GET_MAIN_WINDOW, createLogger, SELECTED_SVG_PATH, LOAD_SVG_CONTENT } = require('./common/serviceCenter');
 const LOGGER = createLogger("FileService");
 class FileService {
 
@@ -20,18 +20,19 @@ class FileService {
                 ]
             })
             .then(result => result.filePaths[0])
-            .then(path => this.readFileContent(path))
+            .then(path => SELECTED_SVG_PATH.send(path))
             .catch(error => LOGGER.error(`SB-002 Error while opening file`, error));
 
         });
     }
 
     readFileContent(path) {
-        fs.readFile(path, { encoding: 'utf-8'}, (error, data) => {
-            if (error) {
-                LOGGER.error(`SB-001 Error while reading file ${path}`, error);
+        fs.readFile(path, {}, (err, data) => {
+            if (err) {
+                LOGGER.error(`SB-001 Error while reading file ${path}`, err);
             } else {
-                LOGGER.debug(`File ${path} was successfully read`);
+                LOGGER.debug(`Content of ${path} successfully loaded`);
+                LOAD_SVG_CONTENT.send(data);
             }
         });
     }
@@ -39,3 +40,4 @@ class FileService {
 
 const fileService = new FileService();
 MENU_OPEN_FILE.subscribe(fileService.selectFileToOpen);
+SELECTED_SVG_PATH.subscribe(path => fileService.readFileContent(path));

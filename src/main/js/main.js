@@ -24,6 +24,8 @@ const loadService = () => {
     createLogger('MAIN').info("Logging Service loaded");
     require('./service/fileService');
     require('./service/menuService');
+    require('./service/svgParser');
+    require('./service/svgAnalyser');
 };
 
 app.whenReady().then(() => {

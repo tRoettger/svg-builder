@@ -6,3 +6,4 @@ const loadSvg = async () => {
 }
 
 loadSvg();
+service.subscribeSvg(svgdata => document.getElementById("display").innerHTML = svgdata);

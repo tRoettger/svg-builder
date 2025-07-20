@@ -69,7 +69,8 @@ const createInformationProvider = (channelId) => ({
 });
 
 /* BROADCAST CHANNELS */
-exports.LOAD_SVG = createBroadcastChannel("LOAD_SVG");
+exports.SELECTED_SVG_PATH = createBroadcastChannel("SELECTED_SVG_PATH");
+exports.LOAD_SVG_CONTENT = createBroadcastChannel("LOAD_SVG_CONTENT");
 exports.MENU_OPEN_FILE = createBroadcastChannel("MENU_OPEN_FILE");
 const logger = createBroadcastChannel("LOG");
 const log = (source, severity, message, error) => logger.send({
@@ -90,6 +91,7 @@ exports.createLogger = (source) => ({
     debug: (message) => log(source, "DEBUG", message),
     trace: (message) => log(source, "TRACE", message)
 });
+exports.SVG_DOCUMENT_ELEMENT = createBroadcastChannel("SVG_DOCUMENT_ELEMENT");
 
 /* REQUEST / RESPONSE CHANNELS */
 exports.GET_MAIN_WINDOW = createInformationProvider("GET_MAIN_WINDOW");
